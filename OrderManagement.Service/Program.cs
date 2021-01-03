@@ -1,4 +1,6 @@
 ﻿using System;
+using MassTransit;
+using OrderManagement.Common;
 
 namespace OrderManagement.Service
 {
@@ -6,7 +8,24 @@ namespace OrderManagement.Service
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Console.Title = "Create Order";
+
+            var bus = BusConfigurator.ConfigureBus(cfg =>
+            {
+                 cfg.ReceiveEndpoint(MqConstants.OrderQueue, e =>
+                   {
+                       e.Consumer<CreateOrderCommandConsumer>();
+                   });
+
+            });
+
+            bus.StartAsync();
+
+            Console.WriteLine("Listening for Create Order commands.. " +
+                              "Press enter to exit");
+            Console.ReadLine();
+
+            bus.StopAsync();
         }
     }
 }
