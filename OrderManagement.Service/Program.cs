@@ -8,23 +8,18 @@ namespace OrderManagement.Service
     {
         static void Main(string[] args)
         {
-            Console.Title = "Create Order";
-
             var bus = BusConfigurator.ConfigureBus(cfg =>
             {
-                 cfg.ReceiveEndpoint(MqConstants.OrderQueue, e =>
-                   {
-                       e.Consumer<CreateOrderCommandConsumer>();
-                   });
+                cfg.ReceiveEndpoint(MqConstants.OrderQueue, e =>
+                  {
+                      e.Consumer<CreateOrderCommandConsumer>();
+                  });
 
             });
 
             bus.StartAsync();
-
-            Console.WriteLine("Listening for Create Order commands.. " +
-                              "Press enter to exit");
+            Console.WriteLine("Listening for Create Order commands... Press enter to exit");
             Console.ReadLine();
-
             bus.StopAsync();
         }
     }

@@ -5,4 +5,10 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+ <ItemGroup>
+    <ProjectReference Include="..\OrderManagement.MessageContracts\OrderManagement.MessageContracts.csproj" />
+    <ProjectReference Include="..\OrderManagement.Common\OrderManagement.Common.csproj" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="7.1.1"/>
+  </ItemGroup>
+  
 </Project>

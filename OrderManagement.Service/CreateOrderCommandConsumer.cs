@@ -10,8 +10,13 @@ namespace OrderManagement.Service
         public Task Consume(ConsumeContext<ICreateOrderCommand> context)
         {
             var message = context.Message;
-            Console.WriteLine($"Order created successfully. OrderCode:{message.OrderCode}, Description:{message.Description}");
- 
+            var orderId = Guid.NewGuid();
+            Console.WriteLine($"Order created successfully. OrderCode:{message.OrderCode}, Description:{message.Description}, Id:{orderId}");
+            context.Publish<IOrderCreatedEvent>(new
+            {
+                Id = orderId
+            });
+            
             return Task.CompletedTask;
         }
     }
